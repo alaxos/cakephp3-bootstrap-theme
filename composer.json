@@ -1,0 +1,23 @@
+{
+    "name": "alaxos/cakephp3-bootstrap-theme",
+    "description": "Bootstrap bake templates for CakePHP 3",
+    "type": "cakephp-plugin",
+    "keywords" : ["cakephp", "libraries", "theme", "bake", "bootstrap"],
+    "homepage": "https://github.com/alaxos/cakephp3-bootstrap-theme",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4",
+        "cakephp/cakephp": "~3.0",
+        "alaxos/cakephp3-libs": "~1.0"
+    },
+    "require-dev": {
+		"phpunit/phpunit": "*"
+	},
+    "autoload": {
+        "psr-4": {
+            "Alaxos\\BootstrapTheme\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
+
