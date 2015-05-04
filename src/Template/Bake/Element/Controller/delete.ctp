@@ -26,9 +26,9 @@
         $this->request->allowMethod(['post', 'delete']);
         $<%= $singularName %> = $this-><%= $currentModelName %>->get($id);
         if ($this-><%= $currentModelName; %>->delete($<%= $singularName %>)) {
-            $this->Flash->success('The <%= strtolower($singularHumanName) %> has been deleted.', ['plugin' => 'Alaxos']);
+            $this->Flash->success(___('the <%= strtolower($singularHumanName) %> has been deleted'), ['plugin' => 'Alaxos']);
         } else {
-            $this->Flash->error('The <%= strtolower($singularHumanName) %> could not be deleted. Please, try again.', ['plugin' => 'Alaxos']);
+            $this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be deleted. Please, try again.'), ['plugin' => 'Alaxos']);
         }
         return $this->redirect(['action' => 'index']);
     }

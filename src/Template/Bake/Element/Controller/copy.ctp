@@ -34,10 +34,10 @@ $compact = ["'" . $singularName . "'"];
 			$<%= $singularName %> = $this-><%= $currentModelName %>->newEntity();
 			$<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
 			if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-				$this->Flash->success('The <%= strtolower($singularHumanName) %> has been saved.', ['plugin' => 'Alaxos']);
+				$this->Flash->success(___('the <%= strtolower($singularHumanName) %> has been saved'), ['plugin' => 'Alaxos']);
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The <%= strtolower($singularHumanName) %> could not be saved. Please, try again.', ['plugin' => 'Alaxos']);
+				$this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
 			}
 		}
 <%
