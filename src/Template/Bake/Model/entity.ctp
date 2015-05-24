@@ -17,12 +17,14 @@
 namespace <%= $namespace %>\Model\Entity;
 
 use Cake\ORM\Entity;
+use Alaxos\Model\Entity\TimezonedTrait;
 
 /**
  * <%= $name %> Entity.
  */
-class <%= $name %> extends AppEntity
+class <%= $name %> extends Entity
 {
+	use TimezonedTrait;
 <% if (!empty($fields)): %>
 
     /**
