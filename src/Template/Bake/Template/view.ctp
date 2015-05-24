@@ -35,7 +35,7 @@ $relations = $associations['HasMany'] + $associations['BelongsToMany'];
 %>
 
 <div class="<%= $pluralVar %> view">
-	<h2><?php echo ___('<%= strtolower($singularHumanName) %>'); ?></h2>
+	<h2><?php echo __('<%= strtolower($singularHumanName) %>'); ?></h2>
 	
 	<div class="panel panel-default">
 		<div class="panel-heading">
