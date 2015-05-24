@@ -31,3 +31,19 @@ Plugin::load('Alaxos/BootstrapTheme');
 ```bash
 $ ./bin/cake bake model Users --theme Alaxos/BootstrapTheme
 ```
+
+
+### Load Bootstrap CSS and JS
+
+You may use the following functions to load Bootstrap CSS and JS in your template:
+
+```php
+<?php 
+echo $this->AlaxosHtml->includeBootstrapCSS(['block' => false]);
+echo $this->AlaxosHtml->includeBootstrapThemeCSS(['block' => false]);
+echo $this->AlaxosHtml->includeAlaxosCSS(['block' => false]);
+	
+echo $this->AlaxosHtml->includeAlaxosJQuery(['block' => false]);
+echo $this->AlaxosHtml->includeAlaxosBootstrapJS(['block' => false]);
+?>
+```
