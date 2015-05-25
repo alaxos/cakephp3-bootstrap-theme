@@ -23,7 +23,7 @@ $fields = collection($fields)
 <div class="<%= $pluralVar %> form">
 	
 	<fieldset>
-		<legend><?= ___('<%= strtolower(Inflector::humanize($action)) %> <%= strtolower($singularHumanName) %>') ?></legend>
+		<legend><?= __('<%= strtolower(Inflector::humanize($action)) %> <%= strtolower($singularHumanName) %>') ?></legend>
 		
 		<div class="panel panel-default">
 			<div class="panel-heading">
