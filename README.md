@@ -18,9 +18,11 @@ composer require alaxos/cakephp3-bootstrap-theme
 
 ### Enabling the plugin
 
-After adding the plugin remember to load it in your `config/bootstrap.php` file:
+After adding the plugin remember to load it in your `config/bootstrap.php` file.
+The `Alaxos` plugin must be loaded as well.
 
 ```php
+Plugin::load('Alaxos', ['bootstrap' => true]);
 Plugin::load('Alaxos/BootstrapTheme');
 ```
 
@@ -28,4 +30,20 @@ Plugin::load('Alaxos/BootstrapTheme');
 
 ```bash
 $ ./bin/cake bake model Users --theme Alaxos/BootstrapTheme
+```
+
+
+### Load Bootstrap CSS and JS
+
+You may use the following functions to load Bootstrap CSS and JS in your template:
+
+```php
+<?php 
+echo $this->AlaxosHtml->includeBootstrapCSS(['block' => false]);
+echo $this->AlaxosHtml->includeBootstrapThemeCSS(['block' => false]);
+echo $this->AlaxosHtml->includeAlaxosCSS(['block' => false]);
+	
+echo $this->AlaxosHtml->includeAlaxosJQuery(['block' => false]);
+echo $this->AlaxosHtml->includeAlaxosBootstrapJS(['block' => false]);
+?>
 ```

@@ -22,6 +22,9 @@ $defaultModel = $name;
 
 $actions = array_merge($actions, ['delete_all', 'copy']);
 $components[] = 'Alaxos.Filter';
+$helpers[] = 'Alaxos.AlaxosHtml';
+$helpers[] = 'Alaxos.AlaxosForm';
+$helpers[] = 'Alaxos.Navbars';
 %>
 <?php
 namespace <%= $namespace %>\Controller<%= $prefix %>;
