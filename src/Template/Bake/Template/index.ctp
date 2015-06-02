@@ -37,26 +37,26 @@ use Cake\Utility\Inflector;
 			
 			<table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-condensed">
 			<thead>
-			<tr>
+			<tr class="sortHeader">
 				<th></th>
 <%
 foreach ($fields as $field) {
 	if(!in_array($field, $primaryKey))
 	{
 %>
-				<th><?php echo $this->Paginator->sort('<%= $field %>'); ?></th>
+				<th><?php echo $this->Paginator->sort('<%= $field %>', ___('<%= $field %>')); ?></th>
 <%
 	}
 }
 %>
-				<th class="actions"><?= __('Actions'); ?></th>
+				<th class="actions"></th>
 			</tr>
-			<tr>
+			<tr class="filterHeader">
 				<td>
 				<?php
 				echo $this->AlaxosForm->checkbox('_Tech.selectAll', ['id' => 'TechSelectAll']);
 				
-				echo $this->AlaxosForm->create($search_entity, array('url' => ['action' => 'index'], 'class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate'));
+				echo $this->AlaxosForm->create($search_entity, array('url' => $this->request->here(false), 'class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate'));
 				?>
 				</td>
 <%
@@ -75,7 +75,7 @@ foreach ($fields as $field) {
 %>
 				<td>
 					<?php
-					echo $this->AlaxosForm->button(__('Submit'), ['class' => 'btn btn-default']);
+					echo $this->AlaxosForm->button(___('filter'), ['class' => 'btn btn-default']);
 					echo $this->AlaxosForm->end();
 					?>
 				</td>
