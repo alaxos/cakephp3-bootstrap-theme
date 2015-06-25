@@ -21,34 +21,34 @@ $fields = collection($fields)
 %>
 
 <div class="<%= $pluralVar %> form">
-	
-	<fieldset>
-		<legend><?= ___('<%= strtolower(Inflector::humanize($action)) %> <%= strtolower($singularHumanName) %>') ?></legend>
-		
-		<div class="panel panel-default">
-			<div class="panel-heading">
-			<?php
+    
+    <fieldset>
+        <legend><?= ___('<%= strtolower(Inflector::humanize($action)) %> <%= strtolower($singularHumanName) %>') ?></legend>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <?php
 <%
 			if (strpos($action, 'add') === false)
         	{
         		$pk = '$' . $singularVar . '->' . $primaryKey[0];
 %>
-			echo $this->Navbars->actionButtons(['buttons_group' => 'edit', 'model_id' => <%= $pk %>]);
+            echo $this->Navbars->actionButtons(['buttons_group' => 'edit', 'model_id' => <%= $pk %>]);
 <%
         	}
         	else
         	{
 %>
-			echo $this->Navbars->actionButtons(['buttons_group' => 'add']);
+            echo $this->Navbars->actionButtons(['buttons_group' => 'add']);
 <%
         	}
 %>
-			?>
-			</div>
-			<div class="panel-body">
-			
-			<?php
-			echo $this->AlaxosForm->create($<%= $singularVar %>, ['class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate']);
+            ?>
+            </div>
+            <div class="panel-body">
+            
+            <?php
+            echo $this->AlaxosForm->create($<%= $singularVar %>, ['class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate']);
 <%
 // debug($primaryKey);
 // debug($keyFields);
@@ -65,10 +65,10 @@ $fields = collection($fields)
             
             
 %>
-			
-			echo '<div class="form-group">';
-			echo $this->AlaxosForm->label('<%= $field %>', __('<%= $field %>'), ['class' => 'col-sm-2 control-label']);
-			echo '<div class="col-sm-5">';
+            
+            echo '<div class="form-group">';
+            echo $this->AlaxosForm->label('<%= $field %>', __('<%= $field %>'), ['class' => 'col-sm-2 control-label']);
+            echo '<div class="col-sm-5">';
 <%
             
             
@@ -80,11 +80,11 @@ $fields = collection($fields)
 	                $fieldData = $schema->column($field);
 	                if (!empty($fieldData['null'])) {
 %>
-			echo $this->AlaxosForm->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true, 'label' => false, 'class' => 'form-control']);
+            echo $this->AlaxosForm->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true, 'label' => false, 'class' => 'form-control']);
 <%
                 	} else {
 %>
-			echo $this->AlaxosForm->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'label' => false, 'class' => 'form-control']);
+            echo $this->AlaxosForm->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'label' => false, 'class' => 'form-control']);
 <%
 	                }
 	            }
@@ -96,46 +96,50 @@ $fields = collection($fields)
 	                $fieldData = $schema->column($field);
 	                if (($fieldData['type'] === 'date') && (!empty($fieldData['null']))) {
 %>
-			echo $this->AlaxosForm->input('<%= $field %>', ['empty' => true, 'default' => '', 'label' => false, 'class' => 'form-control']);
+            echo $this->AlaxosForm->input('<%= $field %>', ['empty' => true, 'default' => '', 'label' => false, 'class' => 'form-control']);
 <%
 	                } 
 	                else 
 	                {
 %>
-			echo $this->AlaxosForm->input('<%= $field %>', ['label' => false, 'class' => 'form-control']);
+            echo $this->AlaxosForm->input('<%= $field %>', ['label' => false, 'class' => 'form-control']);
 <%
 	                }
 	            }
 %>
-			echo '</div>';
-			echo '</div>';
+            echo '</div>';
+            echo '</div>';
 <%
         	}
         }
 %>
-			
-			echo '<div class="form-group">';
-			echo '<div class="col-sm-offset-2 col-sm-5">';
-			echo $this->AlaxosForm->button(___('submit'), ['class' => 'btn btn-default']);
-			echo '</div>';
-			echo '</div>';
-			
-			echo $this->AlaxosForm->end(); 
-			?>
-			</div>
-		</div>
-		
-	</fieldset>
-	
+            
 <%
+if (!empty($associations['BelongsToMany'])) {
+    foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
+%>
+            echo '<div class="form-group">';
+            echo $this->AlaxosForm->label('<%= $assocName %>', __('<%= $assocName %>'), ['class' => 'col-sm-2 control-label']);
+            echo '<div class="col-sm-5">';
+            echo $this->AlaxosForm->input('<%= $assocData['property'] %>._ids', ['label' => false, 'options' => $<%= $assocData['variable'] %>]);
+            echo '</div>';
+            echo '</div>';
+            
+<%
+    }
+}
+%>
+            echo '<div class="form-group">';
+            echo '<div class="col-sm-offset-2 col-sm-5">';
+            echo $this->AlaxosForm->button(___('submit'), ['class' => 'btn btn-default']);
+            echo '</div>';
+            echo '</div>';
+            
+            echo $this->AlaxosForm->end(); 
+            ?>
+            </div>
+        </div>
         
-        if (!empty($associations['BelongsToMany'])) {
-            foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
-%>
-            echo $this->AlaxosForm->input('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]);
-<%
-            }
-        }
-%>
-	
+    </fieldset>
+    
 </div>
