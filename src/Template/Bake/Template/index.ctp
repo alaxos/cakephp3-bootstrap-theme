@@ -43,9 +43,21 @@ use Cake\Utility\Inflector;
 foreach ($fields as $field) {
 	if(!in_array($field, $primaryKey))
 	{
+        if(!in_array($field, ['created_by', 'modified_by']))
+        {
+            if(in_array($schema->columnType($field), ['date', 'datetime']))
+            {
+%>
+				<th style="width:160px;"><?php echo $this->Paginator->sort('<%= $field %>', ___('<%= $field %>')); ?></th>
+<%
+            }
+            else
+            {
 %>
 				<th><?php echo $this->Paginator->sort('<%= $field %>', ___('<%= $field %>')); ?></th>
 <%
+            }
+        }
 	}
 }
 %>
@@ -63,6 +75,8 @@ foreach ($fields as $field) {
 foreach ($fields as $field) {
 	if(!in_array($field, $primaryKey))
 	{
+        if(!in_array($field, ['created_by', 'modified_by']))
+        {
 %>
 				<td>
 					<?php
@@ -70,6 +84,7 @@ foreach ($fields as $field) {
 					?>
 				</td>
 <%
+        }
 	}
 }
 %>
@@ -98,17 +113,22 @@ foreach ($fields as $field) {
 								if ($field === $details['foreignKey']) {
 									$isKey = true;
 									
+                                    if(!in_array($field, ['created_by', 'modified_by']))
+                                    {
 %>
 					<td>
 						<?php echo $<%= $singularVar %>->has('<%= $details['property'] %>') ? $this->Html->link($<%= $singularVar %>-><%= $details['property'] %>-><%= $details['displayField'] %>, ['controller' => '<%= $details['controller'] %>', 'action' => 'view', $<%= $singularVar %>-><%= $details['property'] %>-><%= $details['primaryKey'][0] %>]) : ''; ?>
 					</td>
 <%
+                                    }
 								}
 							}
 						}
 					
 					if(!$isKey && !in_array($field, $primaryKey))
 					{
+                        if(!in_array($field, ['created_by', 'modified_by']))
+                        {
 %>
 					<td>
 <%
@@ -133,6 +153,7 @@ foreach ($fields as $field) {
 %>
 					</td>
 <%
+                        }
 					}
 				}
 				

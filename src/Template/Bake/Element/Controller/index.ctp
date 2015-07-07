@@ -14,36 +14,36 @@
  */
 %>
 
-	/**
-	* Index method
-	*
-	* @return void
-	*/
-	public function index()
-	{
+    /**
+    * Index method
+    *
+    * @return void
+    */
+    public function index()
+    {
 <% $belongsTo = $this->Bake->aliasExtractor($modelObj, 'BelongsTo'); %>
 <% if ($belongsTo): %>
-		$this->paginate = [
-			'contain' => [<%= $this->Bake->stringifyList($belongsTo, ['indent' => false]) %>]
-		];
+        $this->paginate = [
+            'contain' => [<%= $this->Bake->stringifyList($belongsTo, ['indent' => false]) %>]
+        ];
 <% endif; %>
-		$this->set('<%= $pluralName %>', $this->paginate($this->Filter->getFilterQuery()));
-		$this->set('_serialize', ['<%= $pluralName %>']);
+        $this->set('<%= $pluralName %>', $this->paginate($this->Filter->getFilterQuery()));
+        $this->set('_serialize', ['<%= $pluralName %>']);
 <%
-		if(!empty($belongsTo)){
-			//add an empty line for clarity
+        if(!empty($belongsTo)){
+            //add an empty line for clarity
 %>
-		
+        
 <%
-		}
-		
-		$compact = [];
+        }
+        
+        $compact = [];
         foreach ($belongsTo as $assoc):
             $association = $modelObj->association($assoc);
             $otherName = $association->target()->alias();
             $otherPlural = $this->_variableName($otherName);
 %>
-		$<%= $otherPlural %> = $this-><%= $currentModelName %>-><%= $otherName %>->find('list', ['limit' => 200]);
+        $<%= $otherPlural %> = $this-><%= $currentModelName %>-><%= $otherName %>->find('list', ['limit' => 200]);
 <%
             $compact[] = "'$otherPlural'";
         endforeach;
@@ -51,8 +51,8 @@
         if(!empty($compact))
         {
 %>
-		$this->set(compact(<%= join(', ', $compact) %>));
+        $this->set(compact(<%= join(', ', $compact) %>));
 <%
         }
 %>
-	}
+    }
