@@ -27,7 +27,7 @@ $compact = ["'" . $singularName . "'"];
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
                 $this->Flash->success(___('the <%= strtolower($singularHumanName) %> has been saved'), ['plugin' => 'Alaxos']);
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $<%= $singularName %>->id]);
             } else {
                 $this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
             }
@@ -37,6 +37,13 @@ $compact = ["'" . $singularName . "'"];
             $this->Bake->aliasExtractor($modelObj, 'BelongsTo'),
             $this->Bake->aliasExtractor($modelObj, 'BelongsToMany')
         );
+        
+        foreach($associations as $i => $assoc){
+            if(in_array($assoc, ['Creator', 'Editor'])){
+                unset($associations[$i]);
+            }
+        }
+        
         foreach ($associations as $assoc):
             $association = $modelObj->association($assoc);
             $otherName = $association->target()->alias();

@@ -14,6 +14,11 @@
  */
 
 $belongsTo = $this->Bake->aliasExtractor($modelObj, 'BelongsTo');
+foreach($belongsTo as $i => $bt){
+    if(in_array($bt, ['Creator', 'Editor'])){
+        unset($belongsTo[$i]);
+    }
+}
 $belongsToMany = $this->Bake->aliasExtractor($modelObj, 'BelongsToMany');
 $compact = ["'" . $singularName . "'"];
 %>
@@ -35,7 +40,7 @@ $compact = ["'" . $singularName . "'"];
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
                 $this->Flash->success(___('the <%= strtolower($singularHumanName) %> has been saved'), ['plugin' => 'Alaxos']);
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $<%= $singularName %>->id]);
             } else {
                 $this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
             }

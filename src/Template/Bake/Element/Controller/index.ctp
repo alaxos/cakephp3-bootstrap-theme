@@ -21,7 +21,14 @@
     */
     public function index()
     {
-<% $belongsTo = $this->Bake->aliasExtractor($modelObj, 'BelongsTo'); %>
+<% 
+$belongsTo = $this->Bake->aliasExtractor($modelObj, 'BelongsTo'); 
+foreach($belongsTo as $i => $bt){
+    if(in_array($bt, ['Creator', 'Editor'])){
+        unset($belongsTo[$i]);
+    }
+}
+%>
 <% if ($belongsTo): %>
         $this->paginate = [
             'contain' => [<%= $this->Bake->stringifyList($belongsTo, ['indent' => false]) %>]

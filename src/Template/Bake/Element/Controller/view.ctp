@@ -18,6 +18,12 @@ $allAssociations = array_merge(
     $this->Bake->aliasExtractor($modelObj, 'HasOne'),
     $this->Bake->aliasExtractor($modelObj, 'HasMany')
 );
+
+foreach($allAssociations as $i => $association){
+    if(in_array($association, ['Creator', 'Editor'])){
+        unset($allAssociations[$i]);
+    }
+}
 %>
 
     /**

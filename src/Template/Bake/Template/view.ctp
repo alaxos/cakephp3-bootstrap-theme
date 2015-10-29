@@ -49,13 +49,16 @@ $relations = $associations['HasMany'] + $associations['BelongsToMany'];
 <%
 			foreach ($fields as $field) 
 			{
-				if(isset($associationFields[$field]))
+			    if(isset($associationFields[$field]))
 				{
 					$isKey = false;
 					if (!empty($associations['BelongsTo'])) {
 						foreach ($associations['BelongsTo'] as $alias => $details) {
-							if ($field === $details['foreignKey']) {
-								$isKey = true;
+						
+					        if(!in_array($details['alias'], ['Creator', 'Editor']))
+					        {
+							    if ($field === $details['foreignKey']) {
+								    $isKey = true;
 %>
 				<dt><?php echo __('<%= Inflector::humanize(Inflector::underscore($details['property'])) %>'); ?></dt>
 				<dd>
@@ -63,7 +66,8 @@ $relations = $associations['HasMany'] + $associations['BelongsToMany'];
 				</dd>
 					
 <%
-							break;
+							        break;
+							    }
 							}
 						}
 					}
