@@ -63,6 +63,7 @@ $behaviors['Alaxos.UserLink'] = [];
 <% foreach ($behaviors as $behavior => $behaviorData): %>
         $this->addBehavior('<%= $behavior %>'<%= $behaviorData ? ", [" . implode(', ', $behaviorData) . ']' : '' %>);
 <% endforeach %>
+
 <% foreach ($associations as $type => $assocs): %>
 <% foreach ($assocs as $assoc):
 	$alias = $assoc['alias'];
