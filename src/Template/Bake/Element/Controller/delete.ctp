@@ -42,7 +42,7 @@
             }
             else
             {
-                $this->Flash->error(sprintf(__('The <%= strtolower($singularHumanName) %> could not be deleted: %s', $ex->getMessage())), ['plugin' => 'Alaxos']);
+                $this->Flash->error(sprintf(__('The <%= strtolower($singularHumanName) %> could not be deleted: %s'), $ex->getMessage()), ['plugin' => 'Alaxos']);
             }
         }
         
