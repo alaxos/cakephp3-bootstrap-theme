@@ -202,8 +202,9 @@ foreach ($fields as $field) {
 			<div class="paging text-center">
 				<ul class="pagination pagination-sm">
 				<?php
+				$this->Paginator->templates(['ellipsis' => '<li class="ellipsis"><span>...</span></li>']);
 				echo $this->Paginator->prev('< ' . __('previous'));
-				echo $this->Paginator->numbers();
+				echo $this->Paginator->numbers(['first' => 2, 'last' => 2]);
 				echo $this->Paginator->next(__('next') . ' >');
 				?>
 				</ul>
