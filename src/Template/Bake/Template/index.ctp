@@ -68,7 +68,7 @@ foreach ($fields as $field) {
 				<?php
 				echo $this->AlaxosForm->checkbox('_Tech.selectAll', ['id' => 'TechSelectAll']);
 				
-				echo $this->AlaxosForm->create($search_entity, array('url' => $this->request->here(false), 'class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate'));
+				echo $this->AlaxosForm->create($search_entity, array('url' => [], 'class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate'));
 				?>
 				</td>
 <%
