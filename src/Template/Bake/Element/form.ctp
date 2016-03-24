@@ -18,6 +18,8 @@ $fields = collection($fields)
     ->filter(function($field) use ($schema) {
         return $schema->columnType($field) !== 'binary';
     });
+    
+$hidden_fields = ['password', 'created', 'created_by', 'modified', 'modified_by', 'updated'];
 %>
 
 <div class="<%= $pluralVar %> form">
@@ -54,7 +56,7 @@ $fields = collection($fields)
 // debug($keyFields);
         foreach ($fields as $field) {
         	
-        	if (!in_array($field, ['created', 'modified', 'updated', 'created_by', 'modified_by']))
+        	if (!in_array($field, $hidden_fields))
         	{
 	            if (in_array($field, $primaryKey)) {
 	            	/*
@@ -88,7 +90,7 @@ $fields = collection($fields)
 <%
 	                }
 	            }
-	            elseif (!in_array($field, ['created', 'modified', 'updated', 'created_by', 'modified_by'])) 
+	            elseif (!in_array($field, $hidden_fields)) 
 	            {
 	            	/*
 	            	 * All other cases

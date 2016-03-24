@@ -32,6 +32,14 @@ echo implode("\n", $uses);
 
 /**
  * <%= $name %> Model
+<% if ($associations): %>
+ *
+<% foreach ($associations as $type => $assocs): %>
+<% foreach ($assocs as $assoc): %>
+ * @property \Cake\ORM\Association\<%= Inflector::camelize($type) %> $<%= $assoc['alias'] %>
+<% endforeach %>
+<% endforeach; %>
+<% endif; %>
  */
 class <%= $name %>Table extends Table
 {
@@ -44,6 +52,8 @@ class <%= $name %>Table extends Table
      */
     public function initialize(array $config)
     {
+        parent::initialize($config);
+
 <% if (!empty($table)): %>
         $this->table('<%= $table %>');
 <% endif %>
@@ -58,12 +68,18 @@ class <%= $name %>Table extends Table
 <% endif %>
 <% endif %>
 <%
-$behaviors['Alaxos.UserLink'] = [];
+$behaviors['Alaxos.UserLink']  = [];
+$behaviors['Alaxos.Timezoned'] = [];
 %>
+<% if (!empty($behaviors)): %>
+
+<% endif; %>
 <% foreach ($behaviors as $behavior => $behaviorData): %>
         $this->addBehavior('<%= $behavior %>'<%= $behaviorData ? ", [" . implode(', ', $behaviorData) . ']' : '' %>);
 <% endforeach %>
+<% if (!empty($associations['belongsTo']) || !empty($associations['hasMany']) || !empty($associations['belongsToMany'])): %>
 
+<% endif; %>
 <% foreach ($associations as $type => $assocs): %>
 <% foreach ($assocs as $assoc):
 	$alias = $assoc['alias'];
@@ -83,18 +99,12 @@ $behaviors['Alaxos.UserLink'] = [];
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-<% $validationMethods = []; %>
 <%
 foreach ($validation as $field => $rules):
+    $validationMethods = [];
     foreach ($rules as $ruleName => $rule):
         if ($rule['rule'] && !isset($rule['provider'])):
-            $validationMethods[] = sprintf(
-                "->add('%s', '%s', ['rule' => '%s'])",
-                $field,
-                $ruleName,
-                $rule['rule']
-            );
+            $validationMethods[] = sprintf("->%s('%s')", $rule['rule'], $field);
         elseif ($rule['rule'] && isset($rule['provider'])):
             $validationMethods[] = sprintf(
                 "->add('%s', '%s', ['rule' => '%s', 'provider' => '%s'])",
@@ -112,7 +122,7 @@ foreach ($validation as $field => $rules):
                     $field,
                     $rule['allowEmpty']
                 );
-            elseif ($rule['allowEmpty'] || in_array($field, ['created_by', 'modified_by'])):
+            elseif ($rule['allowEmpty']):
                 $validationMethods[] = sprintf(
                     "->allowEmpty('%s')",
                     $field
@@ -129,11 +139,20 @@ foreach ($validation as $field => $rules):
             endif;
         endif;
     endforeach;
+
+    if (!empty($validationMethods)):
+        $lastIndex = count($validationMethods) - 1;
+        $validationMethods[$lastIndex] .= ';';
+        %>
+        $validator
+        <%- foreach ($validationMethods as $validationMethod): %>
+            <%= $validationMethod %>
+        <%- endforeach; %>
+
+<%
+    endif;
 endforeach;
 %>
-<%= "            " . implode("\n            ", $validationMethods) . ";" %>
-
-
         return $validator;
     }
 <% endif %>
@@ -154,7 +173,7 @@ endforeach;
         return $rules;
     }
 <% endif; %>
-<% if ($connection != 'default'): %>
+<% if ($connection !== 'default'): %>
 
     /**
      * Returns the database connection name to use by default.

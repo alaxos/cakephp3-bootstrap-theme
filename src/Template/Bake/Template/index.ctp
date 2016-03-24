@@ -19,8 +19,27 @@ use Cake\Utility\Inflector;
 //        return !in_array($schema->columnType($field), ['binary', 'text']);
 //    })
 //    ->take(7);
-%>
 
+$has_text_field = false;
+foreach ($fields as $field) {
+    if($schema->columnType($field) == 'text'){
+        $has_text_field = true;
+        break;
+    }
+}
+
+$hidden_fields = ['password', 'created_by', 'modified_by'];
+%>
+<%
+if($has_text_field){
+%>
+<?php 
+use Alaxos\Lib\StringTool;
+?>
+
+<%
+}
+%>
 <div class="<%= $pluralVar %> index">
 	
 	<h2><?= ___('<%= strtolower($pluralHumanName) %>'); ?></h2>
@@ -43,7 +62,7 @@ use Cake\Utility\Inflector;
 foreach ($fields as $field) {
 	if(!in_array($field, $primaryKey))
 	{
-        if(!in_array($field, ['created_by', 'modified_by']))
+        if(!in_array($field, $hidden_fields))
         {
             if(in_array($schema->columnType($field), ['date', 'datetime']))
             {
@@ -75,12 +94,25 @@ foreach ($fields as $field) {
 foreach ($fields as $field) {
 	if(!in_array($field, $primaryKey))
 	{
-        if(!in_array($field, ['created_by', 'modified_by']))
+        if(!in_array($field, $hidden_fields))
         {
 %>
 				<td>
 					<?php
+<%
+				if(in_array($schema->columnType($field), ['datetime']))
+				{
+%>
+					echo $this->AlaxosForm->filterDate('<%= $field %>');
+<%
+				}
+				else
+				{
+%>
 					echo $this->AlaxosForm->filterField('<%= $field %>');
+<%
+				}
+%>
 					?>
 				</td>
 <%
@@ -113,7 +145,7 @@ foreach ($fields as $field) {
 								if ($field === $details['foreignKey']) {
 									$isKey = true;
 									
-                                    if(!in_array($field, ['created_by', 'modified_by']))
+                                    if(!in_array($field, $hidden_fields))
                                     {
 %>
 					<td>
@@ -127,7 +159,7 @@ foreach ($fields as $field) {
 					
 					if(!$isKey && !in_array($field, $primaryKey))
 					{
-                        if(!in_array($field, ['created_by', 'modified_by']))
+                        if(!in_array($field, $hidden_fields))
                         {
 %>
 					<td>
@@ -142,6 +174,12 @@ foreach ($fields as $field) {
 						{
 %>
 						<?php echo $this->AlaxosHtml->yesNo($<%= $singularVar %>-><%= $field %>); ?>
+<%
+						}
+						elseif(in_array($schema->columnType($field), ['text']))
+						{
+%>
+						<?php echo h(StringTool::shorten($<%= $singularVar %>-><%= $field %>)); ?>
 <%
 						}
 						else

@@ -32,6 +32,8 @@ $associationFields = collection($fields)
 $pk = "\$$singularVar->{$primaryKey[0]}";
 
 $relations = $associations['HasMany'] + $associations['BelongsToMany'];
+
+$hidden_fields = ['password', 'created', 'created_by', 'modified', 'modified_by'];
 %>
 
 <div class="<%= $pluralVar %> view">
@@ -72,7 +74,7 @@ $relations = $associations['HasMany'] + $associations['BelongsToMany'];
 						}
 					}
 				}
-				elseif(!in_array($field, $primaryKey) && !in_array($field, ['created', 'created_by', 'modified', 'modified_by']))
+				elseif(!in_array($field, $primaryKey) && !in_array($field, $hidden_fields))
 				{
 %>
 				<dt><?= ___('<%= $field %>'); ?></dt>
