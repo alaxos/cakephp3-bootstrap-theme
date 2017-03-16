@@ -33,7 +33,7 @@ $hidden_fields = ['password', 'created_by', 'modified_by'];
 <%
 if($has_text_field){
 %>
-<?php 
+<?php
 use Alaxos\Lib\StringTool;
 ?>
 
@@ -41,9 +41,9 @@ use Alaxos\Lib\StringTool;
 }
 %>
 <div class="<%= $pluralVar %> index">
-	
+
 	<h2><?= ___('<%= strtolower($pluralHumanName) %>'); ?></h2>
-	
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 		<?php
@@ -51,9 +51,9 @@ use Alaxos\Lib\StringTool;
 		?>
 		</div>
 		<div class="panel-body">
-			
+
 			<div class="table-responsive">
-			
+
 			<table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-condensed">
 			<thead>
 			<tr class="sortHeader">
@@ -86,7 +86,7 @@ foreach ($fields as $field) {
 				<td>
 				<?php
 				echo $this->AlaxosForm->checkbox('_Tech.selectAll', ['id' => 'TechSelectAll']);
-				
+
 				echo $this->AlaxosForm->create($search_entity, array('url' => [], 'class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate'));
 				?>
 				</td>
@@ -122,13 +122,13 @@ foreach ($fields as $field) {
 %>
 				<td>
 					<?php
-					echo $this->AlaxosForm->button(___('filter'), ['class' => 'btn btn-default']);
+					echo $this->AlaxosForm->button(___d('alaxos', 'filter'), ['class' => 'btn btn-default']);
 					echo $this->AlaxosForm->end();
 					?>
 				</td>
 			</tr>
 			</thead>
-			
+
 			<tbody>
 			<?php foreach ($<%= $pluralVar %> as $i => $<%= $singularVar %>): ?>
 				<tr>
@@ -137,14 +137,14 @@ foreach ($fields as $field) {
 						echo $this->AlaxosForm->checkBox('<%= $singularHumanName %>.' . $i . '.id', array('value' => $<%= $singularVar %>->id, 'class' => 'model_id'));
 						?>
 					</td>
-<%				foreach ($fields as $field) { 
-						
+<%				foreach ($fields as $field) {
+
 						$isKey = false;
 						if (!empty($associations['BelongsTo'])) {
 							foreach ($associations['BelongsTo'] as $alias => $details) {
 								if ($field === $details['foreignKey']) {
 									$isKey = true;
-									
+
                                     if(!in_array($field, $hidden_fields))
                                     {
 %>
@@ -156,7 +156,7 @@ foreach ($fields as $field) {
 								}
 							}
 						}
-					
+
 					if(!$isKey && !in_array($field, $primaryKey))
 					{
                         if(!in_array($field, $hidden_fields))
@@ -194,23 +194,23 @@ foreach ($fields as $field) {
                         }
 					}
 				}
-				
+
 					$pk = '$' . $singularVar . '->' . $primaryKey[0];
 %>
 					<td class="actions">
-						<?php 
+						<?php
 // 						echo $this->Navbars->actionButtons(['buttons_group' => 'list_item', 'buttons_list_item' => [['view', 'edit', 'delete']], 'model_id' => <%= $pk %>]);
 						?>
-						
-						<?php 
+
+						<?php
 // 						echo $this->Html->link('<span class="glyphicon glyphicon-search"></span> ' . __d('alaxos', 'view'), ['action' => 'view', <%= $pk %>], ['class' => 'to_view', 'escape' => false]);
 // 						echo ' ';
 // 						echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> ' . __d('alaxos', 'edit'), ['action' => 'edit', <%= $pk %>], ['escape' => false]);
 // 						echo ' ';
 // 						echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span> ' . __d('alaxos', 'delete'), ['action' => 'delete', <%= $pk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>), 'escape' => false]);
 						?>
-						
-						<?php 
+
+						<?php
 						echo $this->Html->link('<span class="glyphicon glyphicon-search"></span>', ['action' => 'view', <%= $pk %>], ['class' => 'to_view', 'escape' => false]);
 						echo '&nbsp;&nbsp;';
 						echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span>', ['action' => 'edit', <%= $pk %>], ['escape' => false]);
@@ -221,11 +221,11 @@ foreach ($fields as $field) {
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
-			
+
 			</table>
-			
+
 			</div>
-			
+
 			<?php
 			if(isset($<%= $pluralVar %>) && $<%= $pluralVar %>->count() > 0)
 			{
@@ -236,7 +236,7 @@ foreach ($fields as $field) {
 				echo '</div>';
 			}
 			?>
-			
+
 			<div class="paging text-center">
 				<ul class="pagination pagination-sm">
 				<?php
@@ -247,7 +247,7 @@ foreach ($fields as $field) {
 				?>
 				</ul>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
