@@ -30,7 +30,7 @@
             if ($total_deleted == $total) {
 
                 if ($total_deleted == 1) {
-                    $this->Flash->success(___('the selected <%= strtolower($singularHumanName) %> has been deleted.'), ['plugin' => 'Alaxos']);
+                    $this->Flash->success(__('The selected <%= strtolower($singularHumanName) %> has been deleted.'), ['plugin' => 'Alaxos']);
                 } elseif ($total_deleted > 1) {
                     $this->Flash->success(sprintf(__('The %s selected <%= strtolower($pluralHumanName) %> have been deleted.'), $total_deleted), ['plugin' => 'Alaxos']);
                 }
@@ -38,7 +38,7 @@
             } else {
 
                 if ($total_deleted == 0) {
-                    $this->Flash->error(___('the selected <%= strtolower($pluralHumanName) %> could not be deleted. Please, try again.'), ['plugin' => 'Alaxos']);
+                    $this->Flash->error(__('The selected <%= strtolower($pluralHumanName) %> could not be deleted. Please, try again.'), ['plugin' => 'Alaxos']);
                 } else {
                     $this->Flash->error(sprintf(___('only %s selected <%= strtolower($pluralHumanName) %> on %s could be deleted'), $total_deleted, $total), ['plugin' => 'Alaxos']);
                 }
@@ -46,7 +46,7 @@
             }
 
         } else {
-            $this->Flash->error(___('there was no <%= strtolower($singularHumanName) %> to delete'), ['plugin' => 'Alaxos']);
+            $this->Flash->error(__('There was no <%= strtolower($singularHumanName) %> to delete'), ['plugin' => 'Alaxos']);
         }
 
         return $this->redirect(['action' => 'index']);
