@@ -207,7 +207,7 @@ foreach ($fields as $field) {
 // 						echo ' ';
 // 						echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> ' . __d('alaxos', 'edit'), ['action' => 'edit', <%= $pk %>], ['escape' => false]);
 // 						echo ' ';
-// 						echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span> ' . __d('alaxos', 'delete'), ['action' => 'delete', <%= $pk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>), 'escape' => false]);
+// 						echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span> ' . __d('alaxos', 'delete'), ['action' => 'delete', <%= $pk %>], ['confirm' => __d('alaxos', 'Are you sure you want to delete element # {0}?', <%= $pk %>), 'escape' => false]);
 						?>
 
 						<?php
@@ -215,7 +215,7 @@ foreach ($fields as $field) {
 						echo '&nbsp;&nbsp;';
 						echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span>', ['action' => 'edit', <%= $pk %>], ['escape' => false]);
 						echo '&nbsp;&nbsp;';
-						echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', ['action' => 'delete', <%= $pk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>), 'escape' => false]);
+						echo $this->Form->postLink('<span class="glyphicon glyphicon-trash"></span>', ['action' => 'delete', <%= $pk %>], ['confirm' => __d('alaxos', 'Are you sure you want to delete element # {0}?', <%= $pk %>), 'escape' => false]);
 						?>
 					</td>
 				</tr>

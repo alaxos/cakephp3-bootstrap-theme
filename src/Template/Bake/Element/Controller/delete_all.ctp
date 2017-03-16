@@ -40,7 +40,7 @@
                 if ($total_deleted == 0) {
                     $this->Flash->error(__('The selected <%= strtolower($pluralHumanName) %> could not be deleted. Please, try again.'), ['plugin' => 'Alaxos']);
                 } else {
-                    $this->Flash->error(sprintf(___('only %s selected <%= strtolower($pluralHumanName) %> on %s could be deleted'), $total_deleted, $total), ['plugin' => 'Alaxos']);
+                    $this->Flash->error(sprintf(__('Only %s selected <%= strtolower($pluralHumanName) %> on %s could be deleted'), $total_deleted, $total), ['plugin' => 'Alaxos']);
                 }
 
             }
