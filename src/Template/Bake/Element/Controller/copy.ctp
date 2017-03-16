@@ -27,7 +27,7 @@ $compact = ["'" . $singularName . "'"];
      * Copy method
      *
      * @param string|null $id <%= $singularHumanName %> id.
-     * @return void Redirects on successful copy, renders view otherwise.
+     * @return \Cake\Network\Response|void Redirects on successful copy, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function copy($id = null)
@@ -45,6 +45,7 @@ $compact = ["'" . $singularName . "'"];
                 $this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
             }
         }
+        
 <%
         foreach (array_merge($belongsTo, $belongsToMany) as $assoc):
             $association = $modelObj->association($assoc);

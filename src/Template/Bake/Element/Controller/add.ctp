@@ -18,7 +18,7 @@ $compact = ["'" . $singularName . "'"];
     /**
      * Add method
      *
-     * @return void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -26,10 +26,11 @@ $compact = ["'" . $singularName . "'"];
         if ($this->request->is('post')) {
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-                $this->Flash->success(___('the <%= strtolower($singularHumanName) %> has been saved'), ['plugin' => 'Alaxos']);
-                return $this->redirect(['action' => 'view', $<%= $singularName %>->id]);
+                $this->Flash->success(__('The <%= strtolower($singularHumanName) %> has been saved.'), ['plugin' => 'Alaxos']);
+
+                return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
+                $this->Flash->error(__('The <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
             }
         }
 <%
