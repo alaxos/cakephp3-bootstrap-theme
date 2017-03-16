@@ -37,7 +37,6 @@ namespace <%= $namespace %>\Model\Table;
 
 <%
 $uses = [
-    'use Cake\ORM\Query;',
     'use Cake\ORM\RulesChecker;',
     'use Cake\ORM\Table;',
     'use Cake\Validation\Validator;'
@@ -62,16 +61,16 @@ class <%= $name %>Table extends Table
         parent::initialize($config);
 
 <% if (!empty($table)): %>
-        $this->table('<%= $table %>');
+        $this->setTable('<%= $table %>');
 <% endif %>
 <% if (!empty($displayField)): %>
-        $this->displayField('<%= $displayField %>');
+        $this->setDisplayField('<%= $displayField %>');
 <% endif %>
 <% if (!empty($primaryKey)): %>
 <% if (count($primaryKey) > 1): %>
-        $this->primaryKey([<%= $this->Bake->stringifyList((array)$primaryKey, ['indent' => false]) %>]);
+        $this->setPrimaryKey([<%= $this->Bake->stringifyList((array)$primaryKey, ['indent' => false]) %>]);
 <% else: %>
-        $this->primaryKey('<%= current((array)$primaryKey) %>');
+        $this->setPrimaryKey('<%= current((array)$primaryKey) %>');
 <% endif %>
 <% endif %>
 <%

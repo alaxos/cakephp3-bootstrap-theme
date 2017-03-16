@@ -37,7 +37,7 @@ $compact = ["'" . $singularName . "'"];
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $<%= $singularName %> = $this-><%= $currentModelName %>->newEntity();
-            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
+            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->getData());
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
                 $this->Flash->success(___('the <%= strtolower($singularHumanName) %> has been saved'), ['plugin' => 'Alaxos']);
                 return $this->redirect(['action' => 'view', $<%= $singularName %>->id]);
@@ -45,7 +45,7 @@ $compact = ["'" . $singularName . "'"];
                 $this->Flash->error(___('the <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'), ['plugin' => 'Alaxos']);
             }
         }
-        
+
 <%
         foreach (array_merge($belongsTo, $belongsToMany) as $assoc):
             $association = $modelObj->association($assoc);
@@ -57,7 +57,7 @@ $compact = ["'" . $singularName . "'"];
             $compact[] = "'$otherPlural'";
         endforeach;
 %>
-        
+
         $<%= $singularName %>-><%= $modelObj->primaryKey() %> = $id;
         $this->set(compact(<%= join(', ', $compact) %>));
         $this->set('_serialize', ['<%=$singularName%>']);

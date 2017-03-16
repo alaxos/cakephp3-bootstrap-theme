@@ -24,7 +24,7 @@ $compact = ["'" . $singularName . "'"];
     {
         $<%= $singularName %> = $this-><%= $currentModelName %>->newEntity();
         if ($this->request->is('post')) {
-            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
+            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->getData());
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
                 $this->Flash->success(__('The <%= strtolower($singularHumanName) %> has been saved.'), ['plugin' => 'Alaxos']);
 
@@ -38,13 +38,13 @@ $compact = ["'" . $singularName . "'"];
             $this->Bake->aliasExtractor($modelObj, 'BelongsTo'),
             $this->Bake->aliasExtractor($modelObj, 'BelongsToMany')
         );
-        
+
         foreach($associations as $i => $assoc){
             if(in_array($assoc, ['Creator', 'Editor'])){
                 unset($associations[$i]);
             }
         }
-        
+
         foreach ($associations as $assoc):
             $association = $modelObj->association($assoc);
             $otherName = $association->target()->alias();
