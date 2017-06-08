@@ -42,7 +42,7 @@ use Alaxos\Lib\StringTool;
 %>
 <div class="<%= $pluralVar %> index">
 	
-	<h2><?= ___('<%= strtolower($pluralHumanName) %>'); ?></h2>
+	<h2><?= __('<%= strtolower($pluralHumanName) %>'); ?></h2>
 	
 	<div class="panel panel-default">
 		<div class="panel-heading">
