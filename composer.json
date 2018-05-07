@@ -7,8 +7,8 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4",
-        "cakephp/cakephp": "~3.0",
-        "alaxos/cakephp3-libs": "~1.0"
+        "cakephp/cakephp": "3.5.*",
+        "alaxos/cakephp3-libs": "3.5.*"
     },
     "require-dev": {
 		"phpunit/phpunit": "*"
