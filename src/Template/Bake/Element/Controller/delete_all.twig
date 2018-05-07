@@ -1,0 +1,55 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+
+    /**
+     * Delete all method
+     *
+     * @param string|null $id {{ singularHumanName }} id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete_all($id = null)
+    {
+        $this->getRequest()->allowMethod(['post', 'delete']);
+
+        $checked_ids = $this->getRequest()->getData('checked_ids');
+        if(!empty($checked_ids)){
+
+            $query = $this->{{ currentModelName }}->query();
+            $query->delete()->where(['id IN' => $checked_ids]);
+
+            try{
+                if ($statement = $query->execute()) {
+                    $deleted_total = $statement->rowCount();
+                    if($deleted_total == 1){
+                        $this->Flash->set(___('The selected {{ singularHumanName|lower }} has been deleted.'), ['element' => 'Alaxos.success']);
+                    }
+                    elseif($deleted_total > 1){
+                        $this->Flash->set(sprintf(__('The %s selected {{ pluralHumanName|lower }} have been deleted.'), $deleted_total), ['element' => 'Alaxos.success']);
+                    }
+                } else {
+                    $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error']);
+                }
+            } catch(\Exception $ex){
+                $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error', 'params' => ['exception_message' => $ex->getMessage()]]);
+            }
+
+        } else {
+            $this->Flash->set(___('There was no {{ singularHumanName|lower }} to delete'), ['element' => 'Alaxos.error']);
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
