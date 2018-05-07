@@ -1,0 +1,92 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+{% set fields = Bake.filterFields(fields, schema, modelObject) %}
+<div class="{{ pluralVar }} form">
+    <fieldset>
+        <legend><?= ___('{{ action }} {{ singularHumanName|lower }}') ?></legend>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <?php
+            {{- "\n" }}
+            {%- if action != 'add' and action != 'copy' %}
+            echo $this->Navbars->actionButtons(['buttons_group' => 'edit', 'model_id' => ${{singularVar}}->id]);
+            {%- else %}
+            echo $this->Navbars->actionButtons(['buttons_group' => 'add']);
+            {%- endif %}
+
+            ?>
+            </div>
+            <div class="panel-body">
+
+            <?php
+            echo $this->AlaxosForm->create(${{ singularVar }}, ['class' => 'form-horizontal', 'role' => 'form', 'novalidate' => 'novalidate']);
+{% for field in fields if field not in primaryKey %}
+{% if field != 'created_by' and field != 'modified_by' %}
+        {%- if keyFields[field] %}
+
+            echo '<div class="form-group">';
+            echo $this->AlaxosForm->label('{{ field }}', __('{{ field }}'), ['class' => 'col-sm-2 control-label']);
+            echo '<div class="col-sm-5">';
+            {{- "\n" }}
+
+            {%- set fieldData = Bake.columnData(field, schema) %}
+
+            {%- if fieldData.null %}
+            echo $this->AlaxosForm->control('{{ field }}', ['options' => ${{ keyFields[field] }}, 'empty' => true, 'label' => false, 'class' => 'form-control']);
+            {%- else %}
+            echo $this->AlaxosForm->control('{{ field }}', ['options' => ${{ keyFields[field] }}, 'label' => false, 'class' => 'form-control']);
+            {%- endif %}
+
+            echo '</div>';
+            echo '</div>';
+            {{- "\n" }}
+
+        {%- elseif field not in ['created', 'modified', 'updated'] %}
+
+            echo '<div class="form-group">';
+            echo $this->AlaxosForm->label('{{ field }}', __('{{ field }}'), ['class' => 'col-sm-2 control-label']);
+            echo '<div class="col-sm-5">';
+            {{- "\n" }}
+
+            {%- set fieldData = Bake.columnData(field, schema) %}
+
+            {%- if fieldData.type in ['date', 'datetime', 'time'] and fieldData.null %}
+            echo $this->AlaxosForm->control('{{ field }}', ['empty' => true, 'label' => false, 'class' => 'form-control']);
+            {%- else %}
+            echo $this->AlaxosForm->control('{{ field }}', ['label' => false, 'class' => 'form-control']);
+            {%- endif %}
+
+            echo '</div>';
+            echo '</div>';
+            {{- "\n" }}
+
+        {%- endif %}
+{%- endif %}
+{%- endfor %}
+
+            echo '<div class="form-group">';
+            echo '<div class="col-sm-offset-2 col-sm-5">';
+            echo $this->AlaxosForm->button(___('submit'), ['class' => 'btn btn-default']);
+            echo '</div>';
+            echo '</div>';
+
+            echo $this->AlaxosForm->end();
+            ?>
+            </div>
+        </div>
+    <fieldset>
+</div>
