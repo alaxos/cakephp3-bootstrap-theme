@@ -22,6 +22,8 @@
     public function index()
     {
 {% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
+{% set belongsToMany = Bake.aliasExtractor(modelObj, 'BelongsToMany') %}
+{% set compact = ["'#{pluralName}'"] %}
 {% if belongsTo %}
         $this->paginate = [
             'contain' => [{{ Bake.stringifyList(belongsTo, {'indent': false})|raw }}]
@@ -29,5 +31,15 @@
 {% endif %}
         ${{ pluralName }} = $this->paginate($this->Filter->getFilterQuery());
 
-        $this->set(compact('{{ pluralName }}'));
+{% for assoc in belongsTo|merge(belongsToMany) %}
+{% if assoc != 'Creator' and assoc != 'Editor' %}
+    {%- set otherName = Bake.getAssociatedTableAlias(modelObj, assoc) %}
+    {%- set otherPlural = otherName|variable %}
+        ${{ otherPlural }} = $this->{{ currentModelName }}->{{ otherName }}->find('list', ['limit' => 200]);
+        {{- "\n" }}
+    {%- set compact = compact|merge(["'#{otherPlural}'"]) %}
+{% endif %}
+{% endfor %}
+
+        $this->set(compact({{ compact|join(', ')|raw }}));
     }
