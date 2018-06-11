@@ -38,10 +38,15 @@
             <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-condensed">
             <thead>
             <tr class="sortHeader">
-                <th></th>
+                <th  style="width:20px;"></th>
 {% for field in fields %}
 {% if field not in hiddenFields %}
+{% set columnData = Bake.columnData(field, schema) %}
+{% if columnData.type in ['date', 'datetime'] %}
                 <th style="width:160px;"><?= $this->Paginator->sort('{{ field }}') ?></th>
+{% else %}
+                <th><?= $this->Paginator->sort('{{ field }}') ?></th>
+{% endif %}
 {% endif %}
 {% endfor %}
                 <th class="actions"></th>
@@ -78,9 +83,9 @@
                     ?>
                 </td>
             </tr>
-        </thead>
+            </thead>
 
-        <tbody>
+            <tbody>
             <?php foreach (${{ pluralVar }} as $i => ${{ singularVar }}): ?>
             <tr>
                 <td>
@@ -104,6 +109,10 @@
                     <?php echo h(${{ singularVar }}->to_display_timezone('{{ field }}')); ?>
 {% elseif columnData.type in ['integer', 'float', 'decimal', 'biginteger', 'smallinteger', 'tinyinteger'] %}
                     <?php echo $this->Number->format(${{ singularVar }}->{{ field }}); ?>
+{% elseif columnData.type in ['boolean'] %}
+                    <?php $this->AlaxosHtml->yesNo(${{ singularVar }}->{{ field }}); ?>
+{% elseif columnData.type in ['text'] %}
+                    <?php echo h(StringTool::shorten(${{ singularVar }}->{{ field }})); ?>
 {% else %}
                     <?php echo h(${{ singularVar }}->{{ field }}); ?>
 {% endif %}
@@ -124,17 +133,34 @@
 
             </tr>
             <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paging text-center">
-        <ul class="pagination pagination-sm">
+            </tbody>
+            </table>
+
+            </div>
+
             <?php
-            $this->Paginator->setTemplates(['ellipsis' => '<li class="ellipsis"><span>...</span></li>']);
-            echo $this->Paginator->prev('< ' . __('previous'));
-            echo $this->Paginator->numbers(['first' => 2, 'last' => 2]);
-            echo $this->Paginator->next(__('next') . ' >');
+            if(isset(${{ pluralVar }}) && ${{ pluralVar }}->count() > 0)
+            {
+                echo '<div class="row">';
+                echo '<div class="col-md-1">';
+                echo $this->AlaxosForm->postActionAllButton(__d('alaxos', 'delete all'), ['action' => 'delete_all'], ['confirm' => __d('alaxos', 'do you really want to delete the selected items ?')]);
+                echo '</div>';
+                echo '</div>';
+            }
             ?>
-        </ul>
+
+            <div class="paging text-center">
+                <ul class="pagination pagination-sm">
+                    <?php
+                    $this->Paginator->setTemplates(['ellipsis' => '<li class="ellipsis"><span>...</span></li>']);
+                    echo $this->Paginator->prev('< ' . __('previous'));
+                    echo $this->Paginator->numbers(['first' => 2, 'last' => 2]);
+                    echo $this->Paginator->next(__('next') . ' >');
+                    ?>
+                </ul>
+            </div>
+
+        </div>
     </div>
 </div>
 
