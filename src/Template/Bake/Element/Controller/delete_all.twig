@@ -43,7 +43,7 @@
                 } else {
                     $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error']);
                 }
-            } catch(\Exception $ex){
+            } catch(Exception $ex){
                 $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error', 'params' => ['exception_message' => $ex->getMessage()]]);
             }
 
