@@ -26,25 +26,32 @@
         $this->getRequest()->allowMethod(['post', 'delete']);
 
         $checked_ids = $this->getRequest()->getData('checked_ids');
-        if(!empty($checked_ids)){
+        if (!empty($checked_ids)) {
 
             $query = $this->{{ currentModelName }}->query();
             $query->delete()->where(['id IN' => $checked_ids]);
 
-            try{
+            try {
                 if ($statement = $query->execute()) {
                     $deleted_total = $statement->rowCount();
-                    if($deleted_total == 1){
+                    if ($deleted_total == 1) {
                         $this->Flash->set(___('The selected {{ singularHumanName|lower }} has been deleted.'), ['element' => 'Alaxos.success']);
-                    }
-                    elseif($deleted_total > 1){
+                    } elseif ($deleted_total > 1) {
                         $this->Flash->set(sprintf(__('The %s selected {{ pluralHumanName|lower }} have been deleted.'), $deleted_total), ['element' => 'Alaxos.success']);
                     }
                 } else {
                     $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error']);
                 }
-            } catch(Exception $ex){
-                $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error', 'params' => ['exception_message' => $ex->getMessage()]]);
+            } catch (\Exception $ex) {
+                if ($ex->getCode() == 23000) {
+                    $this->Flash->error(___('The {{ pluralHumanName|lower }} could not be deleted as some of them are still used in the database'), ['plugin' => 'Alaxos']);
+                } else {
+                    if (Configure::read('debug')) {
+                        $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error', 'params' => ['exception_message' => $ex->getMessage()]]);
+                    } else {
+                        $this->Flash->set(___('The selected {{ pluralHumanName|lower }} could not be deleted. Please, try again.'), ['element' => 'Alaxos.error']);
+                    }
+                }
             }
 
         } else {
