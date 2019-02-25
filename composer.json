@@ -6,13 +6,12 @@
     "homepage": "https://github.com/alaxos/cakephp3-bootstrap-theme",
     "license": "MIT",
     "require": {
-        "php": ">=5.4",
-        "cakephp/cakephp": "~3.6",
-        "alaxos/cakephp3-libs": "~3.6"
+        "cakephp/cakephp": "^3.7",
+        "alaxos/cakephp3-libs": "^3.7"
     },
     "require-dev": {
-		"phpunit/phpunit": "*"
-	},
+        "phpunit/phpunit": "*"
+    },
     "autoload": {
         "psr-4": {
             "Alaxos\\BootstrapTheme\\": "src"
