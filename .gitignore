@@ -5,8 +5,6 @@ CakePHP 3
 /tmp/*
 /logs/*
 
-CakePHP 2
-
 /app/tmp/*
 /app/Config/core.php
 /app/Config/database.php
@@ -15,5 +13,6 @@ CakePHP 2
 /.buildpath
 /.project
 /.settings
+*.iml
 
 composer.lock
