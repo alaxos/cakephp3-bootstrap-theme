@@ -18,10 +18,11 @@
  * @var \{{ namespace }}\View\AppView $this
  * @var \{{ entityClass }}[]|\Cake\Collection\CollectionInterface ${{ pluralVar }}
  */
+
+echo $this->AlaxosHtml->includeAlaxosJS();
 ?>
 {% set fields = Bake.filterFields(fields, schema, modelObject, indexColumns, ['binary', 'text']) %}
 {% set hiddenFields = ['id', 'password', 'created_by', 'creator', 'modified_by', 'editor'] %}
-
 <div class="{{ pluralVar }} index">
     <h2><?= __('{{ pluralHumanName }}') ?></h2>
 
