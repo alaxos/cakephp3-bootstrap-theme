@@ -23,8 +23,6 @@
 <?php
 namespace {{ namespace }}\Controller{{ prefix }};
 
-use {{ namespace }}\Controller\AppController;
-use Cake\Core\Exception\Exception;
 use Cake\Core\Configure;
 
 /**
@@ -50,6 +48,8 @@ class {{ name }}Controller extends AppController
 {% if helpers|trim %}
     {{- helpers|raw }}
 {% endif %}
+
+{{""}}
 
 {%- set components = Bake.arrayProperty('components', components, {'indent': false})|raw %}
 {% if components|trim %}
